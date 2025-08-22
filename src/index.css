@@ -60,4 +60,12 @@
   .wrapper {
     @apply px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
   }
+
+  .search {
+    @apply w-full bg-light-100/5 px-4 py-3 mt-10 mx-auto max-w-3xl rounded-lg;
+
+    & input {
+      @apply w-full bg-transparent py-2 text-gray-200 text-base sm:pr-8 pl-8 placeholder-light-200 outline-hidden;
+    }
+  }
 }

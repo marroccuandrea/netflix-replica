@@ -19,7 +19,10 @@ function App() {
             </h1>
           </header>
           {/* Sezione ricerca */}
-          <Search />
+          {/* Passo al componente lo state, lo passo e lo tratto come una prop */}
+          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          {/* Quando passo lo state non lo devo passare come funzione, altrimenti verrà richiamata istantaneamente */}
+          {/* <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm()} /> */}
         </div>
       </main>
     </>
