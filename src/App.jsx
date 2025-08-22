@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./App.css";
 import Search from "./components/Search";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
+  // useEffect è un hook di React che mi serve per il fetch dei dati
+  // Scrivendolo in questo modo verrà caricato solo all'inizio, per fare ciò devo fornirgli un array di dipendenze vuoto, altrimenti verrà eseguito ad ogni render del componente
+  useEffect(() => {}, []);
 
   return (
     <>
