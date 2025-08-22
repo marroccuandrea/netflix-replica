@@ -22,8 +22,15 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const [errorMessage, setErrorMessage] = useState("");
+  // Setto il valore iniziale della costante che si riempirà dei film tramite il fetch, con un array vuoto
+  const [movieList, setMovieList] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchMovies = async () => {
+    // Faccio partire il loader di default
+    setIsLoading(true);
+    setErrorMessage("");
     try {
       const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
 
@@ -34,11 +41,19 @@ function App() {
       }
 
       const data = await response.json();
-
-      alert(response);
+      // Se il fetch da esito negativo stampa il messaggio di errore e svuota l'array dei film
+      if (data.Response === "false") {
+        setErrorMessage(data.Error || "Caricamento dei film fallito");
+        setMovieList([]);
+        return;
+      }
+      // Se il fetch da esito positivo, riempi l'array dei film con i risultati della chiamata API
+      setMovieList(data.results || []);
     } catch (error) {
       console.error(`Errore nella ricerca del Film: ${error}`);
       setErrorMessage("Errore nella ricerca del film");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -69,7 +84,17 @@ function App() {
           <section className="movies_section">
             <h2>Tutti i Film</h2>
             {/* Creo un condizionale per stampare l'errore in caso ci sia */}
-            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            {isLoading ? (
+              <p className="text-white">Loading...</p>
+            ) : errorMessage ? (
+              <p className="text-red-500">{errorMessage}</p>
+            ) : (
+              <ul>
+                {movieList.map((movie) => (
+                  <p className="text-white">{movie.title}</p>
+                ))}
+              </ul>
+            )}
           </section>
         </div>
       </main>
